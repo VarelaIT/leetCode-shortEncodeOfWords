@@ -24,22 +24,31 @@ public class ShortEncodingOfWords {
 
                 for (int s = 0 ; s < uniqueWords.size(); s++) {
                     unique = uniqueWords.get(s);
+                    if (unique.equals(words[i])){
+                        contains = true;
+                        break;
+                    }
+
                     uniqueLength = unique.length();
                     wordLength = words[i].length();
-                    if (uniqueLength > wordLength)
+
+                    if (uniqueLength > wordLength){
                         uniqueSufix =  unique.substring(uniqueLength - wordLength);
-                    else if (uniqueLength < wordLength)
+                        if (uniqueSufix.equals(words[i])){
+                            contains = true;
+                            uniqueSufix = null;
+                            break;
+                        }
+                    }
+
+                    if (uniqueLength < wordLength){
                         wordSufix =  words[i].substring(wordLength - uniqueLength);
-
-                    if (unique.equals(words[i]) || (uniqueSufix != null && uniqueSufix.equals(words[i])) || (wordSufix != null && wordSufix.equals(unique))){
-                        contains = true;
-
-                        if (wordLength > uniqueLength && uniqueWords.remove(unique)){
+                        if (wordSufix.equals(unique)) {
+                            contains = true;
                             lengthCount -= uniqueLength + 1;
                             lengthCount += wordLength + 1;
+                            break;
                         }
-
-                        break;
                     }
                 }
 
